@@ -35,7 +35,10 @@ printf '%s\n' "${arns[@]}" | jq -R . | jq -s .
 
 export CDKDIR=./source
 
-export CMD="cdk synth -c arnsJson='$(printf '%s\n' \"${arns[@]}\" | jq -R . | jq -s . | tr -d '\n')'"
+export CMD1="cdk synth -c arnsJson='$(printf '%s\n' \"${arns[@]}\" | jq -R . | jq -s . | tr -d '\n')'"
+export CMD2="cdk deploy --profile cw -c arnsJson='$(printf '%s\n' \"${arns[@]}\" | jq -R . | jq -s . | tr -d '\n')'"
+
 cd $CDKDIR
-eval $CMD
+eval $CMD1
+eval $CMD2
 cd ../
