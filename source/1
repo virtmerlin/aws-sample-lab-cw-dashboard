@@ -1,0 +1,95 @@
+import cdk = require('@aws-cdk/core');
+import cloudwatch = require('@aws-cdk/aws-cloudwatch');
+import {GraphWidget, Metric, MathExpression, YAxisProps} from "@aws-cdk/aws-cloudwatch";
+
+export class SourceStack extends cdk.Stack {
+  constructor(scope: cdk.App, id: string, props?: cdk.StackProps) {
+    super(scope, id, props);
+
+    const dashboard = new cloudwatch.Dashboard(this, 'PeakEventDashboard', {dashboardName: 'Peak_Event_Dashboard'});
+
+    
+    //Input Args for tagged resources
+
+    const taggedinstances = this.node.tryGetContext('taggedinstances');
+    
+    interface taggedRoot {
+    name: string;
+    age: number;
+    ecnodes: string;
+    }	
+    
+    let obj: taggedRoot = JSON.parse(taggedinstances);
+
+
+    //EC2
+    dashboard.addWidgets(new cloudwatch.TextWidget({markdown: '\n# EC2 Instances\n[button:primary:Jump To EC2 Service Console](https://console.aws.amazon.com/ec2/v2/home)\n', width: 24}));
+
+    dashboard.addWidgets(
+      this.buildExpression("SEARCH('{AWS/EC2,InstanceId} MetricName=\"CPUUtilization\"', 'Maximum', 300)", 'AWS/EC2', 'CPUUtilization', '%Used'),
+      this.buildExpression("SEARCH('{AWS/EC2,InstanceId} MetricName=\"NetworkIn\"', 'Average', 300)", 'AWS/EC2', 'NetworkIn', 'Bytes'),
+      this.buildExpression("SEARCH('{AWS/EC2,InstanceId} MetricName=\"NetworkOut\"', 'Average', 300)", 'AWS/EC2', 'NetworkOut', 'Bytes'),
+    );
+
+    //ElastiCache
+    dashboard.addWidgets(new cloudwatch.TextWidget({markdown: '\n# Elasticache\n[button:primary:Jump To Elasticache Service Console](https://console.aws.amazon.com/elasticache/home)\n', width: 24}));
+
+    dashboard.addWidgets(
+      this.buildExpression("SEARCH('{AWS/ElastiCache,CacheClusterId} MetricName=\"CPUUtilization\"', 'Maximum', 300)", 'AWS/ElastiCache', 'CPUUtilization', '%Used'),
+      this.buildExpression("SEARCH('{AWS/ElastiCache,CacheClusterId} MetricName=\"EngineCPUUtilization\"', 'Maximum', 300)", 'AWS/ElastiCache', 'EngineCPUUtilization', '%Used'),
+      this.buildExpression("SEARCH('{AWS/ElastiCache,CacheClusterId} MetricName=\"FreeableMemory\"', 'Maximum', 300)", 'AWS/ElastiCache', 'FreeableMemory', 'Bytes'),
+      this.buildExpression("SEARCH('{AWS/ElastiCache,CacheClusterId} MetricName=\"NetworkBytesOut\"', 'Sum', 300)", 'AWS/ElastiCache', 'NetworkBytesOut', 'Bytes'),
+    );
+    dashboard.addWidgets(
+      this.buildExpression("SEARCH('{AWS/ElastiCache,CacheClusterId} MetricName=\"IsMaster\"', 'Maximum', 300)", 'AWS/ElastiCache', 'IsMaster', 'Is Master'),
+      this.buildExpression("SEARCH('{AWS/ElastiCache,CacheClusterId} MetricName=\"CurrConnections\"', 'Sum', 300)", 'AWS/ElastiCache', 'CurrConnections', 'Connections'),
+      this.buildExpression("SEARCH('{AWS/ElastiCache,CacheClusterId} MetricName=\"NewConnections\"', 'Sum', 300)", 'AWS/ElastiCache', 'NewConnections', 'Connections'),
+      this.buildExpression("SEARCH('{AWS/ElastiCache,CacheClusterId} MetricName=\"Evictions\"', 'Sum', 300)", 'AWS/ElastiCache', 'Evictions', 'Evictions'),
+    );
+
+    interface ecNodes {
+	    name: array;
+    }
+
+    let ecnodes: ecNodes = JSON.parse(obj.ecnodes);
+    ecnodes.forEach(element => {
+		console.log(element.name);
+	});
+
+
+
+    //RDS
+    dashboard.addWidgets(new cloudwatch.TextWidget({markdown: '\n# RDS\n[button:primary:Jump To RDS Service Console](https://console.aws.amazon.com/rds/home)\n', width: 24}));
+
+    dashboard.addWidgets(
+      this.buildExpression("SEARCH('{AWS/RDS,DBInstanceIdentifier} MetricName=\"CPUUtilization\"', 'Maximum', 300)", 'AWS/RDS', 'CPUUtilization', '%Used'),
+      this.buildExpression("SEARCH('{AWS/RDS,DBInstanceIdentifier} MetricName=\"ReadIOPS\"', 'Average', 300)", 'AWS/RDS', 'ReadIOPS', 'I/O operations per second'),
+      this.buildExpression("SEARCH('{AWS/RDS,DBInstanceIdentifier} MetricName=\"WriteIOPS\"', 'Average', 300)", 'AWS/RDS', 'WriteIOPS', 'I/O operations per second'),
+      this.buildExpression("SEARCH('{AWS/RDS,DBInstanceIdentifier} MetricName=\"DatabaseConnections\"', 'Sum', 300)", 'AWS/RDS', 'DatabaseConnections', 'Connections'),
+    );
+  }
+
+
+  buildExpression(expression: string, nameSpace: string, metricName: string, unitDescription: string): GraphWidget {
+    //Null IMetric reqd for Expression
+    const mymetric = new Metric({
+      namespace: nameSpace,
+      metricName: metricName,
+      });
+    return new GraphWidget({
+        title: metricName,
+        leftYAxis: {
+          label: unitDescription,
+          showUnits: false,
+        },
+        left: [new MathExpression({
+          expression: expression,
+          period: cdk.Duration.seconds(300),
+          usingMetrics: {
+            initMetric: mymetric
+          },
+          label: ' ',
+        })]
+      })
+    }
+  }
