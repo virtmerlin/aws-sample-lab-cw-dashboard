@@ -3,7 +3,7 @@
 
 This project uses the AWS CDK (Cloud Development Toolkit) to create a CW Dashbaord & CW Alarms based on objects that are tagged for the event.
 
-![DashBoard Image](/images/dashbaord.png)
+![DashBoardImage](https://github.com/virtmerlin/aws-sample-lab-cw-dashboard/blob/master/images/dashboard.png "dashbord")
 
 #### (1) Setup Dev/Workstation PreReqs
 
