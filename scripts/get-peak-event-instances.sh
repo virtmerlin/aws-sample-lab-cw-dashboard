@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 declare -a regions=(
 "eu-north-1"
@@ -36,7 +36,7 @@ printf '%s\n' "${arns[@]}" | jq -R . | jq -s .
 export CDKDIR=./source
 
 export CMD1="cdk synth -c arnsJson='$(printf '%s\n' \"${arns[@]}\" | jq -R . | jq -s . | tr -d '\n')'"
-export CMD2="cdk deploy --profile cw -c arnsJson='$(printf '%s\n' \"${arns[@]}\" | jq -R . | jq -s . | tr -d '\n')'"
+export CMD2="cdk deploy --profile ${1} -c arnsJson='$(printf '%s\n' \"${arns[@]}\" | jq -R . | jq -s . | tr -d '\n')'"
 
 cd $CDKDIR
 eval $CMD1
