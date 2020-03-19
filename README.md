@@ -1,7 +1,7 @@
 # aws-sample-lab-cw-dashboard
 ### Summary
 
-This project uses the [AWS CDK](https://aws.amazon.com/cdk/) (Cloud Development Toolkit) to create a CW Dashboard & CW Alarms based on objects that are tagged for the event.
+This project uses the [AWS CDK](https://aws.amazon.com/cdk/) (Cloud Development Toolkit) to create a CW Dashboard & CW Alarms based on objects that can be tagged in AWS. The project can be used to automatically create/update Dashboard & Alarms with base KPIs to monitor for Peak Events.
 
 ![DashBoardImage](https://github.com/virtmerlin/aws-sample-lab-cw-dashboard/blob/master/images/dashboard.png "dashboard")
 
