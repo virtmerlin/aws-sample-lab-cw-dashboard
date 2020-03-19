@@ -22,9 +22,15 @@ export class SourceStack extends cdk.Stack {
     //ElastiCache
     dashboard.addWidgets(new cloudwatch.TextWidget({markdown: '\n# Elasticache\n[button:primary:Jump To Elasticache Service Console](https://console.aws.amazon.com/elasticache/home)\n', width: 24}));
     dashboard.addWidgets(
-      this.buildMetricLineWidget("AWS/ElastiCache", "CPUUtilization", "CacheClusterId", "elasticache", "cluster", "max", "%Used", objectArns),
-      this.buildMetricLineWidget("AWS/ElastiCache", "EngineCPUUtilization", "CacheClusterId", "elasticache", "cluster", "max", "%Used", objectArns),
+      this.buildMetricLineWidget("AWS/ElastiCache", "CPUUtilization", "CacheClusterId", "elasticache", "cluster", "avg", "%Used", objectArns),
+      this.buildMetricLineWidget("AWS/ElastiCache", "EngineCPUUtilization", "CacheClusterId", "elasticache", "cluster", "avg", "%Used", objectArns, true, 90, 300, 1, "sum"),
       this.buildMetricLineWidget("AWS/ElastiCache", "FreeableMemory", "CacheClusterId", "elasticache", "cluster", "max", "Bytes", objectArns),
+      this.buildMetricLineWidget("AWS/ElastiCache", "NetworkBytesOut", "CacheClusterId", "elasticache", "cluster", "sum", "Bytes", objectArns),
+    );
+    dashboard.addWidgets(
+      this.buildMetricLineWidget("AWS/ElastiCache", "SwapUsage", "CacheClusterId", "elasticache", "cluster", "avg", "Bytes", objectArns),
+      this.buildMetricLineWidget("AWS/ElastiCache", "BytesUsedForCache", "CacheClusterId", "elasticache", "cluster", "avg", "Bytes", objectArns),
+      this.buildMetricLineWidget("AWS/ElastiCache", "CurrItems", "CacheClusterId", "elasticache", "cluster", "max", "Count of Objects", objectArns),
       this.buildMetricLineWidget("AWS/ElastiCache", "NetworkBytesOut", "CacheClusterId", "elasticache", "cluster", "sum", "Bytes", objectArns),
     );
     dashboard.addWidgets(
