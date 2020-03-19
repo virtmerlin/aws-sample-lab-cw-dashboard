@@ -1,13 +1,13 @@
 # aws-sample-lab-cw-dashboard
 ### Summary
 
-This project uses the AWS CDK (Cloud Development Toolkit) to create a CW Dashboard & CW Alarms based on objects that are tagged for the event.
+This project uses the [AWS CDK](https://aws.amazon.com/cdk/) (Cloud Development Toolkit) to create a CW Dashboard & CW Alarms based on objects that are tagged for the event.
 
 ![DashBoardImage](https://github.com/virtmerlin/aws-sample-lab-cw-dashboard/blob/master/images/dashboard.png "dashboard")
 
 #### (1) Setup Dev/Workstation PreReqs
 
-AWS CDK is the key component, and can be supported on Mac OSX or Linux,  this set of provided instructions to setup your workstation to push the Dashbord is based on using an Amazon Linux AMI.
+A development/CICD pipeline function or instance image will be required to generate/update the dashbaord.  The [AWS CDK](https://aws.amazon.com/cdk/) is the key component to accomplish this, and can be supported on Mac OSX or Linux,  this set of provided instructions to setup your dev workstation to push the Dashbord is based on using an Amazon Linux AMI.
 
 1. Launch new EC2 instance [AMI Amazon Linux 2](https://aws.amazon.com/amazon-linux-2/)
 2. Install git & jq: `sudo yum install -y git jq`
