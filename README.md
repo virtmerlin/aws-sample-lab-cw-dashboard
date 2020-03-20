@@ -19,6 +19,7 @@ A development/CICD pipeline function or instance image will be required to gener
 5. Clone the repo locally to the workstation:
     - `git clone https://github.com/virtmerlin/aws-sample-lab-cw-dashboard.git`
 6. Install Required Node Modules for the project:
+    - `cd aws-sample-lab-cw-dashboard`
     - `cd source && npm install typescript '@aws-cdk/core' '@aws-cdk/aws-cloudwatch' && cd ..`
 7. Setup Your AWS CLI:
     - `aws configure`
