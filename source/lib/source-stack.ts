@@ -51,6 +51,23 @@ export class SourceStack extends cdk.Stack {
   }
 
   //// Functions
+    parseArnsJason() {
+
+      var arnsEC2: string[];
+      var arnsRDS: string[];
+      var arnsElasticache: string[];
+      for (let i of objectArns) {
+        i = i.replace(/"/g, '');
+        i = i.replace(/\//g, ":");
+        var splits = i.split(":");
+        switch (splits[2]) {
+            case 'rds':
+              arnsRDS.push(i);
+              console.log("Found RDS");
+              break;
+        };
+    };
+
     buildMetricLineWidget(nameSpace: string, metricName: string, dimensionName: string, arnServiceFilter: string, arnTypeFilter: string, statistic: string, unitDescription: string, objectArns: any, alarmEnabled: boolean = false, alarmThresh?: number, alarmPeriod?: number, alarmEval?: number, alarmStatistic?: string): GraphWidget {
 
     var myMetrics = new Array<Metric>();
