@@ -33,14 +33,14 @@ A development/CICD pipeline function or instance image will be required to gener
 
 ### (2) Tag AWS Account Objects to monitor
 
-    - Open AWS Console & Navigate to [Tag Editor](https://us-west-1.console.aws.amazon.com/resource-groups/tag-editor/find-resources)
-    - Tag Objects you want to be monitored with:
+   - Open AWS Console & Navigate to [Tag Editor](https://us-west-1.console.aws.amazon.com/resource-groups/tag-editor/find-resources)
+   - Tag Objects you want to be monitored with:
      `PeakEvent:true`
 
 ### (3) Generate Cloudwatch Dashboard & Alarms
 
-    - `cd [your_git_project_root_folder]/aws-sample-lab-cw-dashboard`
-    - `./scripts/get-peak-event-instances.sh [your_aws_cli_profilename: ex ... default]`
+- `cd [your_git_project_root_folder]/aws-sample-lab-cw-dashboard`
+- `./scripts/get-peak-event-instances.sh [your_aws_cli_profilename: ex ... default]`
 
 
 IFF: No errors, you will see ...
