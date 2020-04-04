@@ -10,17 +10,20 @@ This project uses the [AWS CDK](https://aws.amazon.com/cdk/) (Cloud Development 
 A development/CICD pipeline function or instance image will be required to generate/update the dashbaord.  The [AWS CDK](https://aws.amazon.com/cdk/) is the key component to accomplish this, and can be supported on Mac OSX or Linux,  this set of provided instructions to setup your dev workstation to push the Dashbord is based on using an Amazon Linux AMI.
 
 1. Launch new EC2 instance [AMI Amazon Linux 2](https://aws.amazon.com/amazon-linux-2/)
-2. Install git & jq: `sudo yum install -y git jq`
+2. Install git & jq: 
+    - `sudo yum install -y git jq`
 3. Install node:
     - `curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash`
     - `. ~/.nvm/nvm.sh`
     - `nvm install node`
-4. Install AWS CDK: `npm install -g aws-cdk`
+4. Install AWS CDK: 
+    - `npm install -g aws-cdk`
 5. Clone the repo locally to the workstation:
     - `git clone https://github.com/virtmerlin/aws-sample-lab-cw-dashboard.git`
 6. Install Required Node Modules for the project:
     - `cd aws-sample-lab-cw-dashboard/source`
     - `npm install typescript '@aws-cdk/core' '@aws-cdk/aws-cloudwatch'`
+    - `npx npm-check-updates -u`
     - `cd ..`
 7. Setup Your AWS CLI:
     - `aws configure`
