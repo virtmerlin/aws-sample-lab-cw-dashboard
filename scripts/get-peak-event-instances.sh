@@ -28,6 +28,9 @@ for i in "${regions[@]}"
   --region $i \
   --tag-filters Key=PeakEvent,Values=true \
   --output json | jq .ResourceTagMappingList[].ResourceARN))
+  arns+=($(aws autoscaling describe-auto-scaling-groups \
+  --region $i \
+  --output json | jq '. | select((.AutoScalingGroups[].Tags[].Key == "PeakEvent") and .AutoScalingGroups[].Tags[].Value == "true") | .AutoScalingGroups[].AutoScalingGroupARN'))
   done
 
 echo "Script will Generate Cloud Formation for the following AWS Tagged Objects"
@@ -40,5 +43,6 @@ export CMD2="cdk deploy --profile ${1} -c arnsJson='$(printf '%s\n' \"${arns[@]}
 
 cd $CDKDIR
 eval $CMD1
+#Comment out this line if you simply want to gen CloudFormation
 eval $CMD2
 cd ../
