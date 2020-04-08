@@ -57,7 +57,7 @@ When complete you should be able to navaigate to the generated Peak Event Dashbo
 - _*Q*_: Can the dashboard add AWS resources I tag after the dashboard is created?
    - _*A*_: Yes,  re-run step 3 whenever related AWS object tags have been added/removed.
 
-- _*Q*_: What AWS Resource Types that the Dashboard will have widgets/alarms for?
+- _*Q*_: What are the AWS Resource Types that the Dashboard will have widgets/alarms for?
    - _*A*_: As of now: ASGs (ASGs require that group metrics are enabled), EC2 Instances, Elasticache Clusters, RDS Instances.  Check back often as we are adding more all the time.
 
 - _*Q*_: Can I add New Metrics or Alarms?
