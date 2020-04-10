@@ -49,7 +49,7 @@ IFF: No errors, you will see ...
 - A dump of the generated CloudFormation for the dashboard & alarms (same as running `cdk synth`)
 - A Console log of the creation/update of the CloudFormation Stack in your AWS account. (same as running `cdk deploy`)
 
-When complete you should be able to navaigate to the generated Peak Event Dashboard.
+When complete you should be able to navigate to the generated Peak Event Dashboard.
 
 
 ## FAQ
